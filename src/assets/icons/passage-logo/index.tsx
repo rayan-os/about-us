@@ -1,0 +1,219 @@
+import { gsap } from "gsap";
+import { useEffect, useRef } from "react";
+
+export function PassageLogo() {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const pRefs = useRef<(SVGPathElement | null)[]>([]);
+  const dotRef = useRef<SVGEllipseElement>(null);
+  const middleLettersRefs = useRef<(SVGGElement | null)[]>([]);
+  const pContainerRef = useRef<SVGGElement>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isHovered = useRef(false);
+
+  const fill = "white";
+
+  const paths = [
+    {
+      d: "M0 44V0H17C21.2435 0 25.3131 1.68571 28.3137 4.68629C31.3143 7.68687 33 11.7565 33 16C33 20.2435 31.3143 24.3131 28.3137 27.3137C25.3131 30.3143 21.2435 32 17 32H9V44H0ZM9 24H16.0017C18.1228 23.9996 20.1569 23.1568 21.6569 21.6569C23.1572 20.1566 24 18.1217 24 16C24 13.8783 23.1572 11.8434 21.6569 10.3431C20.1566 8.84285 18.1217 8 16 8H9V24Z",
+      custom: 0,
+    },
+    {
+      d: "M33 28.0001C33 37.5001 40.5 45.0001 49 45.0001C55 45.0001 57 43 58.5 41.5L59.5 44.0001H67V12.0001H59.5L58.5 14.5C57 13 55 11 49 11C40.5 11 33 18.5001 33 28.0001ZM50.7018 19.0001C45.7018 19.0001 41.5 23.0001 41.5 28.0001C41.5 33.0001 45.5 37.0001 50.5 37.0001C55.5 37.0001 59.5 33.0001 59.5 28.0001C59.5 23.0001 55.7018 19.0001 50.7018 19.0001Z",
+      custom: 1,
+    },
+    {
+      d: "M77.8169 29.3857L77.8029 29.3803L77.7887 29.3757C73.6139 28.0421 70.3485 25.3908 70.3485 21.297C70.3485 15.1751 75.9228 11 82.5335 11C84.6341 11 87.4694 11.4193 89.8646 12.8607C92.1279 14.2226 94.0277 16.5123 94.5399 20.325H85.9319C85.8726 19.9435 85.7395 19.4485 85.3966 19.0008C84.8739 18.3183 83.9522 17.847 82.4155 17.847C81.2726 17.847 80.4446 18.2096 79.9011 18.7531C79.3664 19.2878 79.1425 19.9633 79.1425 20.53C79.1425 21.6793 79.9358 22.5039 80.9158 23.1028C81.9047 23.7071 83.2125 24.1645 84.5158 24.5496L84.5242 24.5519C87.3175 25.3245 90.0911 26.1021 92.1771 27.5354C94.2187 28.9381 95.6035 30.9714 95.6035 34.336C95.6035 40.8611 89.8645 44.987 82.7695 44.987C80.3549 44.987 77.3431 44.4389 74.8421 42.866C72.4739 41.3766 70.5404 38.9566 70 35.131H78.7535C79.077 36.5492 79.9465 37.3204 80.8218 37.7189C81.7466 38.1401 82.6601 38.14 82.8843 38.14H82.8875C83.7998 38.14 84.755 37.8813 85.4964 37.3842C86.244 36.883 86.8095 36.1091 86.8095 35.103C86.8095 34.5207 86.696 34.0077 86.432 33.5493C86.17 33.0943 85.7815 32.7308 85.2926 32.4112C84.3523 31.7966 82.9231 31.275 81.0129 30.5778L80.9401 30.5512C80.0254 30.2173 78.9886 29.8389 77.8169 29.3857Z",
+      custom: 2,
+    },
+    {
+      d: "M104.817 29.3857L104.803 29.3803L104.789 29.3757C100.614 28.0421 97.3485 25.3908 97.3485 21.297C97.3485 15.1751 102.923 11 109.534 11C111.634 11 114.469 11.4193 116.865 12.8607C119.128 14.2226 121.028 16.5123 121.54 20.325H112.932C112.873 19.9435 112.739 19.4485 112.397 19.0008C111.874 18.3183 110.952 17.847 109.416 17.847C108.273 17.847 107.445 18.2096 106.901 18.7531C106.366 19.2878 106.143 19.9633 106.143 20.53C106.143 21.6793 106.936 22.5039 107.916 23.1028C108.905 23.7071 110.213 24.1645 111.516 24.5496L111.524 24.5519C114.318 25.3245 117.091 26.1021 119.177 27.5354C121.219 28.9381 122.604 30.9714 122.604 34.336C122.604 40.8611 116.865 44.987 109.77 44.987C107.355 44.987 104.343 44.4389 101.842 42.866C99.4739 41.3766 97.5404 38.9566 97 35.131H105.753C106.077 36.5492 106.947 37.3204 107.822 37.7189C108.747 38.1401 109.66 38.14 109.884 38.14H109.888C110.8 38.14 111.755 37.8813 112.496 37.3842C113.244 36.883 113.81 36.1091 113.81 35.103C113.81 34.5207 113.696 34.0077 113.432 33.5493C113.17 33.0943 112.781 32.7308 112.293 32.4112C111.352 31.7966 109.923 31.275 108.013 30.5778L107.94 30.5512C107.025 30.2173 105.989 29.8389 104.817 29.3857Z",
+      custom: 3,
+    },
+    {
+      d: "M124 28.0001C124 37.5001 131.5 45.0001 140 45.0001C146 45.0001 148 43 149.5 41.5L150.5 44.0001H158V12.0001H150.5L149.5 14.5C148 13 146 11 140 11C131.5 11 124 18.5001 124 28.0001ZM141.702 19.0001C136.702 19.0001 132.5 23.0001 132.5 28.0001C132.5 33.0001 136.5 37.0001 141.5 37.0001C146.5 37.0001 150.5 33.0001 150.5 28.0001C150.5 23.0001 146.702 19.0001 141.702 19.0001Z",
+      custom: 4,
+    },
+    {
+      d: "M177 45.0001C168.5 45.0001 161 37.5001 161 28.0001C161 18.5001 168.5 11 177 11C183 11 185 13 186.5 14.5L187.5 12.0001H195V43C194.953 44.9437 194.717 47.2797 193.821 49.5631C192.705 52.4086 190.634 54.9608 187.184 56.7182C181.674 59.5246 171.7 60.5451 163.37 54.7122L167.959 48.1591C173.472 52.0199 180.221 51.2866 183.553 49.5896C185.204 48.7487 185.949 47.7239 186.374 46.6421C186.859 45.4052 187 43.8912 187 42L187 41.5C185.5 43 183 45.0001 177 45.0001ZM169.5 28.0001C169.5 23.0001 173.702 19.0001 178.702 19.0001C183.702 19.0001 187.5 23.0001 187.5 28.0001C187.5 33.0001 183.5 37.0001 178.5 37.0001C173.5 37.0001 169.5 33.0001 169.5 28.0001Z",
+      custom: 5,
+    },
+    {
+      d: "M215 45C205.611 45 198 37.3888 198 28C198 18.6112 205.611 11 215 11C224.389 11 232 18.6112 232 28C232 29.0237 231.91 30.0262 231.736 31H206.984C208.151 34.4956 211.299 37 215 37C215.852 37 220.02 36.9634 223.343 34.0102L228.657 39.9895C223.019 45.0016 216.217 45.0003 215 45ZM215 19C218.701 19 221.849 21.5044 223.016 25H206.984C208.151 21.5044 211.299 19 215 19Z",
+      custom: 6,
+    },
+  ];
+
+  useEffect(() => {
+    if (!svgRef.current) return;
+
+    // Get middle letters (all except P which is custom: 0)
+    const middleLetters = middleLettersRefs.current.filter(Boolean);
+
+    // Calculate center positions
+    const svgWidth = 253;
+    const svgCenter = svgWidth / 2;
+    const pWidth = 33; // Approximate width of P
+    const dotWidth = 14.752; // 2 * rx of ellipse
+    const combinedWidth = pWidth + dotWidth + 10; // 10px gap
+
+    // Centered positions for "P."
+    const centeredPX = svgCenter - combinedWidth / 2;
+    const centeredDotX = svgCenter + combinedWidth / 2 - dotWidth / 2;
+
+    // Expanded positions
+    const expandedPX = -1; // Left position for P
+    const expandedDotX = svgWidth - 10; // Right position for dot
+
+    // Set initial state: P and dot centered together, middle letters hidden
+    gsap.set(pContainerRef.current, { x: centeredPX });
+    gsap.set(dotRef.current, { x: centeredDotX - 255 }); // Offset from original position
+    gsap.set(middleLetters, { opacity: 0 });
+
+    // Create the main timeline (paused initially)
+    const tl = gsap.timeline({ paused: true });
+
+    // Add animations to timeline
+    tl.to(pContainerRef.current, {
+      x: expandedPX,
+      duration: 1,
+      ease: "power2.out",
+    })
+      .to(
+        dotRef.current,
+        {
+          x: expandedDotX - 245.447,
+          duration: 1,
+          ease: "power2.out",
+        },
+        "<"
+      )
+      .to(
+        middleLetters,
+        {
+          opacity: 1,
+          duration: 1,
+          stagger: 0.1,
+          ease: "power2.out",
+        },
+        "<+0.3"
+      );
+
+    // Store timeline reference
+    timelineRef.current = tl;
+
+    // Play the initial animation after a delay
+    setTimeout(() => {
+      tl.play();
+    }, 500);
+
+    // Set up auto-loop every 10 seconds
+    const startAutoLoop = () => {
+      intervalRef.current = setInterval(() => {
+        if (!isHovered.current && timelineRef.current) {
+          // Toggle between forward and reverse based on current progress
+          if (timelineRef.current.progress() === 1) {
+            timelineRef.current.reverse();
+          } else {
+            timelineRef.current.play();
+          }
+        }
+      }, 10000);
+    };
+
+    // Start auto-loop after initial animation completes
+    setTimeout(() => {
+      startAutoLoop();
+    }, 2000);
+
+    return () => {
+      tl.kill();
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    isHovered.current = true;
+    if (timelineRef.current) {
+      timelineRef.current.reverse();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    isHovered.current = false;
+    if (timelineRef.current) {
+      timelineRef.current.play();
+    }
+  };
+
+  return (
+    <div className="w-full! h-full! ">
+      <svg
+        ref={svgRef}
+        viewBox="0 0 253 59"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        className="w-full h-full cursor-pointer"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <ellipse
+          ref={dotRef}
+          cx="245.447"
+          cy="37.6125"
+          rx="7.37609"
+          ry="7.375"
+          fill="#FF6F00"
+        />
+
+        {/* P letter in its own container for positioning */}
+        <g ref={pContainerRef}>
+          <path
+            ref={(el) => {
+              pRefs.current[0] = el;
+            }}
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d={paths[0].d}
+            fill={fill}
+          />
+          <path
+            ref={(el) => {
+              pRefs.current[1] = el;
+            }}
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d={paths[0].d}
+            fill={fill}
+          />
+        </g>
+
+        {/* Middle letters (assage) */}
+        {paths.slice(1).map((path, index) => (
+          <g
+            key={index + 1}
+            className="relative"
+            ref={(el) => {
+              middleLettersRefs.current[index] = el;
+            }}
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d={path.d}
+              fill={fill}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d={path.d}
+              fill={fill}
+            />
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}

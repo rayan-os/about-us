@@ -1,0 +1,571 @@
+/* Passport Scroller Hero Section */
+.passport-scroller-hero {
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* When contained in the product tabs image container */
+.passport-scroller-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  overflow: visible !important;
+}
+
+.passport-scroller-container .passport-scroller-hero {
+  padding: 0;
+  margin: 0;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: visible !important;
+}
+
+.passport-scroller-container .passport-scroller-hero__header {
+  display: none !important;
+}
+
+/* Force visibility - override motion initial states with very high specificity */
+.passport-scroller-container .passport-scroller-hero > div,
+.passport-scroller-container .file-stream {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Reset transform only on the motion wrapper, not on children like the particle canvas */
+.passport-scroller-container .passport-scroller-hero > div:first-child {
+  transform: translateY(0) !important;
+}
+
+.passport-scroller-container .file-stream {
+  height: 290px !important;
+  flex: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+/* Ensure particle scanner canvas is visible and properly positioned */
+.passport-scroller-container .particle-scanner-canvas {
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 25;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  min-width: 400px;
+}
+
+.passport-scroller-container .file-stream__fade {
+  display: none;
+}
+
+/* Extend masks to fill more of the container */
+.passport-scroller-container .file-stream__mask[data-position="left"] {
+  left: -20%;
+}
+
+.passport-scroller-container .file-stream__mask[data-position="right"] {
+  right: -20%;
+}
+
+.passport-scroller-hero__header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 0 1.5rem;
+}
+
+.passport-scroller-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.875rem, 5vw, 3rem);
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.passport-scroller-hero__subtitle {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.125rem;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+/* ================================
+   File Stream - Encryption Effect
+   ================================ */
+
+.file-stream {
+  position: relative;
+  height: 290px;
+  overflow: visible;
+  padding: 35px 0;
+}
+
+/* Mask containers - clip content on each side of the horizon */
+.file-stream__mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.file-stream__mask[data-position="left"] {
+  left: 0;
+  right: 50%;
+  /* Show encrypted content on the left */
+}
+
+.file-stream__mask[data-position="right"] {
+  left: 50%;
+  right: 0;
+  /* Show decrypted content on the right */
+}
+
+/* Scroller - The moving track */
+.file-stream__scroller {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: file-stream-scroll 51s linear infinite;
+  will-change: transform;
+  /* Position the scroller so cards pass through the center */
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 204px;
+}
+
+.file-stream__mask[data-position="left"] .file-stream__scroller {
+  /* Offset to align with center - adjusted for smaller cards */
+  left: calc(50% - 70px);
+}
+
+.file-stream__mask[data-position="right"] .file-stream__scroller {
+  /* Mirror offset for right side */
+  left: calc(-50% + 70px);
+}
+
+.file-stream:hover .file-stream__scroller {
+  animation-play-state: paused;
+}
+
+@keyframes file-stream-scroll {
+  0% {
+    transform: translateY(-50%) translateX(calc(-100% / 6));
+  }
+  100% {
+    transform: translateY(-50%) translateX(calc(-100% / 6 - 100% / 3));
+  }
+}
+
+/* Item container - scaled down 15% (was 165x240, now 140x204) */
+.file-stream__item {
+  flex-shrink: 0;
+  width: 140px;
+  height: 204px;
+}
+
+/* Encrypted state */
+.file-stream__encrypted {
+  width: 100%;
+  height: 100%;
+}
+
+/* Decrypted state */
+.file-stream__decrypted {
+  width: 100%;
+  height: 100%;
+}
+
+/* Fade gradients */
+.file-stream__fade {
+  position: absolute;
+  top: -35px;
+  bottom: -35px;
+  width: 12rem;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.file-stream__fade--left {
+  left: 0;
+  background: linear-gradient(to right, #0E0C0D 0%, #0E0C0D 30%, transparent 100%);
+}
+
+.file-stream__fade--right {
+  right: 0;
+  background: linear-gradient(to left, #0E0C0D 0%, #0E0C0D 30%, transparent 100%);
+}
+
+/* ================================
+   Encrypted Card - scaled down 15%
+   ================================ */
+
+.encrypted-card {
+  width: 140px;
+  height: 204px;
+  border-radius: 5px;
+  background: transparent;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.encrypted-card__chars {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: rgba(147, 51, 234, 0.4);
+  padding: 2px;
+  margin: 0;
+  word-break: break-all;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.encrypted-card__char--highlight {
+  color: rgba(168, 85, 247, 1);
+  font-weight: 700;
+  text-shadow: 
+    0 0 8px rgba(147, 51, 234, 0.9),
+    0 0 20px rgba(147, 51, 234, 0.5);
+}
+
+/* Verified checkmark overlay */
+.encrypted-card__verified {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+  animation: verified-appear 0.5s ease-out forwards;
+}
+
+@keyframes verified-appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.encrypted-card__checkmark {
+  width: 40px;
+  height: 40px;
+  color: #22c55e;
+  filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.6));
+  animation: checkmark-pulse 2s ease-in-out infinite;
+}
+
+@keyframes checkmark-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.9));
+  }
+}
+
+.encrypted-card__verified-text {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #22c55e;
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ================================
+   Document Card - Unified styling for all document types
+   ================================ */
+
+.document-card {
+  position: relative;
+  width: 140px;
+  height: 204px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.document-card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* Document Variants - Colors (simplified, no gradients or shadows) */
+.document-card--navy {
+  background: #1a365d;
+}
+
+.document-card--burgundy {
+  background: #6b2433;
+}
+
+.document-card--green {
+  background: #1a4d2c;
+}
+
+.document-card--black {
+  background: #1f1f1f;
+}
+
+.document-card--red {
+  background: #a01830;
+}
+
+
+/* Texture overlay */
+.document-card__texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Border emboss */
+.document-card__border {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* Spine effect - only for passport type */
+.document-card__spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.25), transparent);
+  pointer-events: none;
+}
+
+/* Hide spine for non-passport documents */
+.document-card--transcript .document-card__spine,
+.document-card--ielts .document-card__spine,
+.document-card--waec .document-card__spine,
+.document-card--toefl .document-card__spine {
+  display: none;
+}
+
+/* Paper document styles - SVG-based designs */
+.document-card--transcript,
+.document-card--ielts,
+.document-card--waec,
+.document-card--toefl {
+  background: transparent;
+  box-shadow: 
+    0 8px 20px -8px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.document-card--transcript:hover,
+.document-card--ielts:hover,
+.document-card--waec:hover,
+.document-card--toefl:hover {
+  box-shadow: 
+    0 15px 35px -10px rgba(0, 0, 0, 0.25),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Paper SVG fills the entire card */
+.document-card__paper-design {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Content */
+.document-card__content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 14px 14px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Document label at top */
+.document-card__label {
+  display: block;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Passport label slightly larger */
+.document-card--passport .document-card__label {
+  font-size: 13px;
+  letter-spacing: 0.18em;
+}
+
+/* Main icon wrapper in center */
+.document-card__icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.document-card__main-icon {
+  width: 60px;
+  height: 60px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Bottom icon wrapper */
+.document-card__bottom-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.document-card__bottom-icon {
+  width: 20px;
+  height: 20px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Biometric icon specific sizing */
+.document-card__bottom-icon--biometric {
+  width: 25px;
+  height: 16px;
+}
+
+/* Black variant - slightly dimmer for contrast */
+.document-card--black .document-card__label,
+.document-card--black .document-card__main-icon,
+.document-card--black .document-card__bottom-icon {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .passport-scroller-hero {
+    padding: 3rem 0;
+  }
+  
+  .passport-scroller-hero__header {
+    margin-bottom: 2rem;
+  }
+  
+  .file-stream {
+    height: 240px;
+    padding: 25px 0;
+  }
+  
+  .file-stream__fade {
+    width: 3rem;
+  }
+  
+  .file-stream__scroller {
+    height: 170px;
+  }
+  
+  /* Mobile: 15% smaller than new base (140x204 -> ~119x173) */
+  .file-stream__item {
+    width: 119px;
+    height: 173px;
+  }
+  
+  .document-card {
+    width: 119px;
+    height: 173px;
+  }
+  
+  .encrypted-card {
+    width: 119px;
+    height: 173px;
+  }
+  
+  .document-card__main-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .document-card__content {
+    padding: 12px 10px 10px;
+  }
+  
+  .document-card__label {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  
+  .document-card--passport .document-card__label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+  }
+  
+  .document-card__bottom-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .document-card__bottom-icon--biometric {
+    width: 20px;
+    height: 13px;
+  }
+  
+  .encrypted-card__chars {
+    font-size: 7.5px;
+    padding: 2px;
+    line-height: 1.2;
+  }
+  
+  .encrypted-card__checkmark {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .encrypted-card__verified-text {
+    font-size: 7px;
+    letter-spacing: 0.1em;
+  }
+  
+  .file-stream__mask[data-position="left"] .file-stream__scroller {
+    left: calc(50% - 60px);
+  }
+  
+  .file-stream__mask[data-position="right"] .file-stream__scroller {
+    left: calc(-50% + 60px);
+  }
+}

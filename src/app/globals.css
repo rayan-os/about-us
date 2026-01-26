@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 330 8% 5%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 25 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 25 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 25 100% 50%;
+    --radius: 1rem;
+    
+    /* Custom colors */
+    --passage-orange: 25 100% 50%;
+    --passage-dark: 60 7% 3%;
+    --passage-card: 0 0% 9%;
+    --passage-muted: 0 0% 50%;
+    
+    /* Font families */
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-nav: 'JetBrains Mono', monospace;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+  }
+
+  ::selection {
+    @apply bg-primary/30 text-white;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  
+  .font-nav {
+    font-family: var(--font-nav);
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, hsl(var(--foreground)), hsl(var(--muted-foreground)));
+  }
+  
+  .glass {
+    @apply backdrop-blur-xl bg-black/80;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-md bg-white/5;
+  }
+
+  /* Smooth scroll snap */
+  .snap-section {
+    scroll-snap-align: start;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground;
+  }
+
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Grain texture overlay */
+  .grain {
+    position: relative;
+  }
+
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Animated gradient background */
+  .animated-gradient {
+    background: linear-gradient(-45deg, #090908, #1a1a1a, #0d0d0d, #181818);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Glow effects */
+  .glow-orange {
+    box-shadow: 0 0 60px 10px hsla(var(--primary), 0.15);
+  }
+
+  .text-shadow {
+    text-shadow: 0 0 80px hsla(var(--foreground), 0.5);
+  }
+}
+
+/* Animation keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track {
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+}
+
+.marquee-seamless {
+  animation: marquee-seamless 90s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee-seamless {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.6s ease-out forwards;
+}
+
+/* React Flow custom node styles */
+.react-flow__node {
+  overflow: visible !important;
+}
+
+.react-flow__node > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Hero gradient styles */
+.hero-gradient {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF4D00 50%, #FF8C00 100%);
+}
+
+.hero-gradient-moving {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF4D00 50%, #FF8C00 100%);
+}
+
+/* Background for hero section */
+.bg-hero-background {
+  background-color: #0a0a0a;
+}
+
+
+
+/* Prefers reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .floating-container,
+  .chat-message-3d,
+  .message-bubble-3d {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .floating-container.floating-active .floating-inner {
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+.flip-card-container {
+  perspective: 1000px;
+}
+
+.flip-card-top {
+  transform-origin: bottom;
+  transform-style: preserve-3d;
+  animation: flipDown 0.6s ease-in-out forwards;
+  clip-path: inset(0 0 50% 0);
+}
+
+.flip-card-text {
+  transform-style: preserve-3d;
+  animation: flipText 0.6s ease-in-out forwards;
+}
+
+@keyframes flipDown {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-180deg);
+  }
+}
+
+@keyframes flipText {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+
+.react-flow__panel {
+  display: none;
+}
