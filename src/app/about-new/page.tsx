@@ -333,16 +333,13 @@ export default function AboutNew() {
         <div className="flex items-center gap-4">
           <Link
             href={ASHBY_CAREERS_URL}
-            className={`hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all hover:scale-105 ${
+            className={`hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
               isDark 
-                ? "bg-gradient-to-r from-emerald-500/20 to-green-500/20 text-emerald-400 border border-emerald-500/30 hover:border-emerald-400/50" 
-                : "bg-gradient-to-r from-emerald-500/10 to-green-500/10 text-emerald-600 border border-emerald-500/30 hover:border-emerald-500/50"
+                ? "bg-white/5 text-white/70 hover:text-white hover:bg-white/10" 
+                : "bg-black/5 text-black/70 hover:text-black hover:bg-black/10"
             }`}
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
+            <span className={`inline-flex rounded-full h-1.5 w-1.5 ${isDark ? "bg-emerald-400" : "bg-emerald-500"}`}></span>
             We're hiring
           </Link>
           <ThemeToggle isDark={isDark} onToggle={() => setIsDark(!isDark)} />
@@ -412,7 +409,7 @@ export default function AboutNew() {
       <section className={`py-16 px-6 border-y ${isDark ? "border-white/5" : "border-black/5"}`}>
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <StatBlock value="$65K" label="Max student financing" isDark={isDark} />
+            <StatBlock value="1M+" label="Students supported" isDark={isDark} />
             <StatBlock value="150+" label="Partner institutions" isDark={isDark} />
             <StatBlock value="100+" label="Countries served" isDark={isDark} />
             <StatBlock value="10x" label="Growth YoY" isDark={isDark} />
