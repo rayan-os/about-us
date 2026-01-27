@@ -85,18 +85,84 @@ function WhyJoinCard({
   );
 }
 
-function InvestorLogo({ name, delay, isDark }: { name: string; delay: number; isDark: boolean }) {
+function InvestorLogo({ 
+  name, 
+  logo, 
+  delay, 
+  isDark 
+}: { 
+  name: string; 
+  logo: string;
+  delay: number; 
+  isDark: boolean;
+}) {
+  // 2048 is square, others are wide - adjust sizing
+  const is2048 = name === "2048 Ventures";
+  
   return (
     <motion.div
-      className={`flex items-center justify-center py-5 border-t border-l transition-colors duration-300 ${
-        isDark ? "border-white/5 hover:bg-white/[0.02]" : "border-black/5 hover:bg-black/[0.02]"
+      className={`group flex items-center justify-center py-8 px-4 border-t border-l transition-all duration-300 ${
+        isDark ? "border-white/10 hover:bg-white/[0.03]" : "border-black/10 hover:bg-black/[0.03]"
       }`}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay }}
     >
-      <span className={`text-xs sm:text-sm ${isDark ? "text-white/50" : "text-black/50"}`}>{name}</span>
+      <div className={`relative flex items-center justify-center ${
+        is2048 
+          ? "w-[100px] h-[100px] sm:w-[120px] sm:h-[120px]" 
+          : "w-[160px] h-[50px] sm:w-[180px] sm:h-[60px]"
+      }`}>
+        <Image 
+          src={logo} 
+          alt={name} 
+          fill
+          className={`object-contain transition-all duration-300 ${
+            isDark 
+              ? "brightness-0 invert opacity-60 group-hover:brightness-100 group-hover:invert-0 group-hover:opacity-100" 
+              : "grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100"
+          }`}
+        />
+      </div>
+    </motion.div>
+  );
+}
+
+const investors = [
+  { name: "Drive Capital", logo: "/investors/drive.png" },
+  { name: "Plug and Play", logo: "/investors/pp.png" },
+  { name: "Think + Ventures", logo: "/investors/think_logo.svg" },
+  { name: "2048 Ventures", logo: "/investors/2048.png" },
+];
+
+const investorCompanies = [
+  { name: "Dropbox", logo: "/companies/dropbox.svg" },
+  { name: "PayPal", logo: "/companies/paypal.png" },
+  { name: "Notion", logo: "/companies/notion.png" },
+  { name: "Duolingo", logo: "/companies/duo.png" },
+];
+
+function CompanyLogo({ name, logo, isDark }: { name: string; logo: string; isDark: boolean }) {
+  return (
+    <motion.div
+      className={`group flex items-center justify-center transition-all duration-300`}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+    >
+      <div className="relative w-[130px] h-[52px] sm:w-[160px] sm:h-[64px] flex items-center justify-center">
+        <Image 
+          src={logo} 
+          alt={name} 
+          fill
+          className={`object-contain transition-all duration-300 ${
+            isDark 
+              ? "brightness-0 invert opacity-50 group-hover:brightness-100 group-hover:invert-0 group-hover:opacity-100" 
+              : "grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100"
+          }`}
+        />
+      </div>
     </motion.div>
   );
 }
@@ -104,11 +170,15 @@ function InvestorLogo({ name, delay, isDark }: { name: string; delay: number; is
 function LeaderCard({ 
   name, 
   role, 
+  image,
+  linkedin,
   isDark, 
   delay 
 }: { 
   name: string; 
   role: string; 
+  image: string;
+  linkedin?: string;
   isDark: boolean; 
   delay: number;
 }) {
@@ -118,17 +188,55 @@ function LeaderCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay }}
+      className="group"
     >
-      <div className={`relative aspect-[3/4] w-full rounded-xl overflow-hidden mb-3 ${
-        isDark ? "bg-white/[0.03]" : "bg-black/[0.03]"
+      <div className={`relative aspect-[3/4] w-full rounded-2xl overflow-hidden mb-4 ${
+        isDark ? "bg-gradient-to-b from-indigo-900/40 to-purple-900/60" : "bg-gradient-to-b from-slate-100 to-slate-200"
       }`}>
-        {/* Empty placeholder for headshot */}
+        <Image 
+          src={image} 
+          alt={name} 
+          fill 
+          className="object-cover object-top group-hover:scale-105 transition-transform duration-500" 
+        />
+        {/* Subtle gradient overlay */}
+        <div className={`absolute inset-0 bg-gradient-to-t ${
+          isDark ? "from-black/60 via-transparent to-transparent" : "from-white/40 via-transparent to-transparent"
+        }`} />
       </div>
-      <p className={`text-sm font-medium ${isDark ? "text-white" : "text-black"}`}>{name}</p>
-      <p className={`text-xs ${isDark ? "text-white/40" : "text-black/40"}`}>{role}</p>
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <p className={`text-sm font-semibold ${isDark ? "text-white" : "text-black"}`}>{name}</p>
+          <p className={`text-xs mt-0.5 ${isDark ? "text-white/50" : "text-black/50"}`}>{role}</p>
+        </div>
+        {linkedin && (
+          <Link 
+            href={linkedin} 
+            target="_blank"
+            className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+              isDark 
+                ? "bg-white/10 hover:bg-white/20 text-white/70" 
+                : "bg-black/10 hover:bg-black/20 text-black/70"
+            }`}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </Link>
+        )}
+      </div>
     </motion.div>
   );
 }
+
+const founders = [
+  { name: "Martin Basiri", role: "Founder & CEO", image: "/team/martin.jpg", linkedin: "https://linkedin.com/in/martinbasiri" },
+  { name: "Jonah Finkelberg", role: "Chief of Staff", image: "/team/jonah.jpg", linkedin: "https://linkedin.com/in/jonahfinkelberg" },
+  { name: "Iman Hassani", role: "Chief Operating Officer", image: "/team/iman.jpg", linkedin: "https://linkedin.com/in/imanhassani" },
+  { name: "Siavash Mahmoudian", role: "Chief Technology Officer", image: "/team/siavash.jpg", linkedin: "https://linkedin.com/in/siavashm" },
+  { name: "Saif Iqbal", role: "Chief Business Officer", image: "/team/saif.jpg", linkedin: "https://linkedin.com/in/saifiqbal" },
+  { name: "Mark Steinman", role: "Chief Legal Officer", image: "/team/mark.jpg", linkedin: "https://linkedin.com/in/marksteinman" },
+];
 
 function TeamGallery({ isDark }: { isDark: boolean }) {
   const photos = ["/team/1.jpg", "/team/2.jpg", "/team/3.jpg", "/team/5.jpg", "/team/6.jpg"];
@@ -391,46 +499,80 @@ export default function AboutNew() {
       </section>
 
       {/* Investors */}
-      <section className={`py-16 px-6 border-t ${isDark ? "border-white/5" : "border-black/5"}`}>
-        <div className="max-w-3xl mx-auto">
+      <section className={`py-20 px-6 border-t ${isDark ? "border-white/5" : "border-black/5"}`}>
+        <div className="max-w-4xl mx-auto">
           <motion.p
-            className={`text-center text-sm mb-8 ${isDark ? "text-white/30" : "text-black/30"}`}
+            className={`text-center text-xs uppercase tracking-widest mb-10 ${isDark ? "text-white/30" : "text-black/30"}`}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            Backed by
+            Supported by leading investors
           </motion.p>
-          <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 border-r border-b ${
-            isDark ? "border-white/5" : "border-black/5"
+          
+          {/* Main Investors */}
+          <div className={`grid grid-cols-2 sm:grid-cols-4 border-r border-b rounded-xl overflow-hidden ${
+            isDark ? "border-white/10" : "border-black/10"
           }`}>
-            <InvestorLogo name="Plug and Play" delay={0.1} isDark={isDark} />
-            <InvestorLogo name="Drive Capital" delay={0.12} isDark={isDark} />
-            <InvestorLogo name="Think + Ventures" delay={0.14} isDark={isDark} />
-            <InvestorLogo name="2048 Ventures" delay={0.16} isDark={isDark} />
-            <InvestorLogo name="Ali Tamaseb" delay={0.18} isDark={isDark} />
+            {investors.map((investor, i) => (
+              <InvestorLogo 
+                key={investor.name}
+                name={investor.name} 
+                logo={investor.logo}
+                delay={0.1 + i * 0.05} 
+                isDark={isDark} 
+              />
+            ))}
           </div>
+          
+          {/* Investor Companies */}
+          <motion.div
+            className="mt-20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <p className={`text-center text-sm mb-10 ${isDark ? "text-white/50" : "text-black/50"}`}>
+              Backed by investors from
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-10 sm:gap-16">
+              {investorCompanies.map((company) => (
+                <CompanyLogo key={company.name} name={company.name} logo={company.logo} isDark={isDark} />
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Leadership */}
-      <section className={`py-20 px-6 border-t ${isDark ? "border-white/5" : "border-black/5"}`}>
-        <div className="max-w-4xl mx-auto">
-          <motion.h2
-            className="text-2xl sm:text-3xl font-medium text-center mb-12"
+      <section className={`py-24 px-6 border-t ${isDark ? "border-white/5" : "border-black/5"}`}>
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            className="text-center mb-16"
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            Leadership
-          </motion.h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6">
-            <LeaderCard name="Name" role="CEO & Co-Founder" isDark={isDark} delay={0.1} />
-            <LeaderCard name="Name" role="CTO & Co-Founder" isDark={isDark} delay={0.15} />
-            <LeaderCard name="Name" role="COO & Co-Founder" isDark={isDark} delay={0.2} />
-            <LeaderCard name="Name" role="Head of Product" isDark={isDark} delay={0.25} />
-            <LeaderCard name="Name" role="Head of Engineering" isDark={isDark} delay={0.3} />
-            <LeaderCard name="Name" role="Head of Growth" isDark={isDark} delay={0.35} />
+            <h2 className="text-2xl sm:text-3xl font-medium mb-3">
+              Leadership
+            </h2>
+            <p className={`text-sm max-w-md mx-auto ${isDark ? "text-white/40" : "text-black/40"}`}>
+              The team building the future of international student mobility
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8">
+            {founders.map((founder, i) => (
+              <LeaderCard 
+                key={founder.name}
+                name={founder.name} 
+                role={founder.role} 
+                image={founder.image}
+                linkedin={founder.linkedin}
+                isDark={isDark} 
+                delay={0.1 + i * 0.05} 
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -487,43 +629,157 @@ export default function AboutNew() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className={`py-20 px-6 border-t ${isDark ? "border-white/5 bg-white/[0.01]" : "border-black/5 bg-black/[0.01]"}`}>
-        <div className="max-w-2xl mx-auto text-center">
-          <motion.h3
-            className="text-xl sm:text-2xl font-medium mb-4"
-            initial={{ opacity: 0, y: 15 }}
+      {/* Join The Movement - Big CTA */}
+      <section className={`relative py-28 sm:py-36 px-6 overflow-hidden ${
+        isDark 
+          ? "bg-gradient-to-br from-indigo-950 via-purple-950 to-black" 
+          : "bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-50"
+      }`}>
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div 
+            className={`absolute -top-1/2 -left-1/4 w-[600px] h-[600px] rounded-full blur-3xl ${
+              isDark ? "bg-indigo-500/20" : "bg-indigo-300/40"
+            }`}
+            animate={{ 
+              x: [0, 50, 0], 
+              y: [0, 30, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className={`absolute -bottom-1/2 -right-1/4 w-[600px] h-[600px] rounded-full blur-3xl ${
+              isDark ? "bg-purple-500/20" : "bg-purple-300/40"
+            }`}
+            animate={{ 
+              x: [0, -50, 0], 
+              y: [0, -30, 0],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-3xl ${
+              isDark ? "bg-orange-500/10" : "bg-orange-200/50"
+            }`}
+            animate={{ 
+              scale: [1, 1.3, 1],
+              opacity: [0.5, 0.8, 0.5]
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            Ready to change lives?
-          </motion.h3>
-          <motion.p
-            className={`mb-8 ${isDark ? "text-white/40" : "text-black/40"}`}
+            {/* Main headline with inline elements */}
+            <h2 className={`text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight mb-6 ${
+              isDark ? "text-white" : "text-black"
+            }`}>
+              Join{" "}
+              <span className="inline-flex items-center mx-2 align-middle">
+                <span className={`inline-flex items-center gap-0 px-2 py-1 rounded-full ${
+                  isDark ? "bg-white/10" : "bg-black/5"
+                }`}>
+                  {/* Team faces */}
+                  <span className="flex -space-x-2">
+                    {["/team/1.jpg", "/team/2.jpg", "/team/3.jpg", "/team/5.jpg"].map((img, i) => (
+                      <span key={i} className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden ring-2 ring-white/20">
+                        <Image src={img} alt="Team" fill className="object-cover" />
+                      </span>
+                    ))}
+                  </span>
+                  {/* Arrow pill */}
+                  <span className="ml-1 w-10 h-8 sm:w-12 sm:h-10 rounded-full bg-gradient-to-r from-orange-400 to-orange-500 flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </span>
+              {" "}the
+              <br />
+              movement
+            </h2>
+
+            <motion.p
+              className={`text-lg sm:text-xl max-w-2xl mx-auto mb-10 ${
+                isDark ? "text-white/60" : "text-black/60"
+              }`}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              A new generation of community and technology to mobilize top global talent.
+            </motion.p>
+
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <Link
+                href={ASHBY_CAREERS_URL}
+                className={`inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-base font-semibold transition-all transform hover:scale-105 ${
+                  isDark 
+                    ? "bg-white text-black hover:bg-white/90 shadow-lg shadow-white/20" 
+                    : "bg-black text-white hover:bg-black/90 shadow-lg shadow-black/20"
+                }`}
+              >
+                Explore Open Roles
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </Link>
+              <Link
+                href="mailto:careers@passage.com"
+                className={`inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-base font-medium transition-all ${
+                  isDark 
+                    ? "bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm" 
+                    : "bg-black/5 text-black hover:bg-black/10"
+                }`}
+              >
+                Get in Touch
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          {/* Toronto HQ */}
+          <motion.div
+            className={`mt-16 pt-10 border-t ${isDark ? "border-white/10" : "border-black/10"}`}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.4 }}
           >
-            Join us in building the future of international education.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            <Link
-              href={ASHBY_CAREERS_URL}
-              className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${
-                isDark ? "text-white hover:text-white/70" : "text-black hover:text-black/70"
-              }`}
-            >
-              See all open roles
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </Link>
+            <div className="flex items-center justify-center gap-3">
+              {/* Location pin */}
+              <span className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                isDark ? "bg-white/10" : "bg-black/5"
+              }`}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={isDark ? "text-white/70" : "text-black/70"}>
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </span>
+              <div className="text-left">
+                <p className={`text-sm font-medium ${isDark ? "text-white" : "text-black"}`}>
+                  Headquartered in Toronto
+                </p>
+                <p className={`text-xs ${isDark ? "text-white/50" : "text-black/50"}`}>
+                  Building from one of the world's most diverse cities 🇨🇦
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
