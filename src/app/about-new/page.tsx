@@ -580,6 +580,208 @@ export default function AboutNew() {
         </div>
       </section>
 
+      {/* Ella Recruiter Section */}
+      <section className={`py-24 px-6 border-t overflow-hidden ${
+        isDark 
+          ? "border-white/5 bg-gradient-to-br from-violet-950/50 via-black to-indigo-950/30" 
+          : "border-black/5 bg-gradient-to-br from-violet-50 via-white to-indigo-50"
+      }`}>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Ella Chat Interface */}
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              {/* Chat container */}
+              <div className={`relative rounded-3xl p-6 ${
+                isDark ? "bg-white/5 backdrop-blur-sm" : "bg-white shadow-xl"
+              }`}>
+                {/* Ella avatar and header */}
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-dashed ${isDark ? 'border-white/10' : 'border-black/10'}">
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 p-0.5">
+                      <div className="w-full h-full rounded-full overflow-hidden bg-black">
+                        <Image src="/assets_ai/Ella.png" alt="Ella" width={48} height={48} className="object-cover" />
+                      </div>
+                    </div>
+                    <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-black"></span>
+                  </div>
+                  <div>
+                    <p className={`font-semibold ${isDark ? "text-white" : "text-black"}`}>Ella</p>
+                    <p className={`text-xs ${isDark ? "text-white/50" : "text-black/50"}`}>AI Recruiting Assistant</p>
+                  </div>
+                </div>
+
+                {/* Chat messages */}
+                <div className="space-y-4">
+                  <motion.div
+                    className={`max-w-[85%] rounded-2xl rounded-tl-sm px-4 py-3 ${
+                      isDark ? "bg-white/10" : "bg-violet-100"
+                    }`}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <p className={`text-sm ${isDark ? "text-white/90" : "text-black/90"}`}>
+                      Hey! 👋 I'm Ella, your AI guide at Passage.
+                    </p>
+                  </motion.div>
+
+                  <motion.div
+                    className={`max-w-[85%] rounded-2xl rounded-tl-sm px-4 py-3 ${
+                      isDark ? "bg-white/10" : "bg-violet-100"
+                    }`}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <p className={`text-sm ${isDark ? "text-white/90" : "text-black/90"}`}>
+                      We're building AI that helps millions of students access education. Want to join us? 🚀
+                    </p>
+                  </motion.div>
+
+                  <motion.div
+                    className="flex justify-end"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.7 }}
+                  >
+                    <div className="max-w-[85%] rounded-2xl rounded-tr-sm px-4 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white">
+                      <p className="text-sm">Tell me more about the roles!</p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    className={`max-w-[85%] rounded-2xl rounded-tl-sm px-4 py-3 ${
+                      isDark ? "bg-white/10" : "bg-violet-100"
+                    }`}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.9 }}
+                  >
+                    <p className={`text-sm ${isDark ? "text-white/90" : "text-black/90"}`}>
+                      We're hiring across Engineering, Product, Design & more. Remote-friendly, great equity, and you'll work with an amazing team! ✨
+                    </p>
+                  </motion.div>
+                </div>
+
+                {/* Input area */}
+                <motion.div
+                  className="mt-6 pt-4 border-t border-dashed ${isDark ? 'border-white/10' : 'border-black/10'}"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 1.1 }}
+                >
+                  <Link
+                    href={ASHBY_CAREERS_URL}
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-medium hover:opacity-90 transition-opacity"
+                  >
+                    <span>Chat with Ella about roles</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                    </svg>
+                  </Link>
+                </motion.div>
+              </div>
+
+              {/* Floating elements */}
+              <motion.div
+                className={`absolute -top-4 -right-4 w-20 h-20 rounded-2xl rotate-12 ${
+                  isDark ? "bg-violet-500/20" : "bg-violet-200"
+                }`}
+                animate={{ rotate: [12, 18, 12], y: [0, -5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className={`absolute -bottom-6 -left-6 w-16 h-16 rounded-full ${
+                  isDark ? "bg-indigo-500/20" : "bg-indigo-200"
+                }`}
+                animate={{ scale: [1, 1.1, 1], y: [0, 5, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+
+            {/* Right - Fun team stats */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <h2 className={`text-3xl sm:text-4xl font-semibold mb-4 ${isDark ? "text-white" : "text-black"}`}>
+                Meet your future
+                <br />
+                <span className="bg-gradient-to-r from-violet-500 to-indigo-500 bg-clip-text text-transparent">teammates</span>
+              </h2>
+              <p className={`text-base mb-8 ${isDark ? "text-white/60" : "text-black/60"}`}>
+                We're a diverse crew of builders, dreamers, and problem-solvers from around the world.
+              </p>
+
+              {/* Fun stats */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className={`p-4 rounded-2xl ${isDark ? "bg-white/5" : "bg-black/5"}`}>
+                  <p className={`text-3xl font-bold ${isDark ? "text-white" : "text-black"}`}>12+</p>
+                  <p className={`text-sm ${isDark ? "text-white/50" : "text-black/50"}`}>Countries represented</p>
+                </div>
+                <div className={`p-4 rounded-2xl ${isDark ? "bg-white/5" : "bg-black/5"}`}>
+                  <p className={`text-3xl font-bold ${isDark ? "text-white" : "text-black"}`}>8</p>
+                  <p className={`text-sm ${isDark ? "text-white/50" : "text-black/50"}`}>Languages spoken</p>
+                </div>
+                <div className={`p-4 rounded-2xl ${isDark ? "bg-white/5" : "bg-black/5"}`}>
+                  <p className={`text-3xl font-bold ${isDark ? "text-white" : "text-black"}`}>∞</p>
+                  <p className={`text-sm ${isDark ? "text-white/50" : "text-black/50"}`}>Cups of coffee</p>
+                </div>
+                <div className={`p-4 rounded-2xl ${isDark ? "bg-white/5" : "bg-black/5"}`}>
+                  <p className={`text-3xl font-bold ${isDark ? "text-white" : "text-black"}`}>1</p>
+                  <p className={`text-sm ${isDark ? "text-white/50" : "text-black/50"}`}>Mission that matters</p>
+                </div>
+              </div>
+
+              {/* Team avatars row */}
+              <div className="mt-8 flex items-center gap-4">
+                <div className="flex -space-x-3">
+                  {["/team/1.jpg", "/team/2.jpg", "/team/3.jpg", "/team/5.jpg", "/team/6.jpg"].map((img, i) => (
+                    <motion.div
+                      key={i}
+                      className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-black"
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + i * 0.1 }}
+                    >
+                      <Image src={img} alt="Team" fill className="object-cover" />
+                    </motion.div>
+                  ))}
+                  <motion.div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-medium ${
+                      isDark ? "bg-white/10 text-white" : "bg-black/10 text-black"
+                    } ring-2 ring-black`}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.8 }}
+                  >
+                    +20
+                  </motion.div>
+                </div>
+                <p className={`text-sm ${isDark ? "text-white/60" : "text-black/60"}`}>
+                  Join our growing team
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Team / CTA */}
       <section className={`py-20 px-6 border-t ${isDark ? "border-white/5" : "border-black/5"}`}>
         <div className="max-w-5xl mx-auto">
