@@ -580,205 +580,293 @@ export default function AboutNew() {
         </div>
       </section>
 
-      {/* Ella Recruiter Section */}
-      <section className={`py-24 px-6 border-t overflow-hidden ${
-        isDark 
-          ? "border-white/5 bg-gradient-to-br from-violet-950/50 via-black to-indigo-950/30" 
-          : "border-black/5 bg-gradient-to-br from-violet-50 via-white to-indigo-50"
+      {/* Futuristic Departments Section */}
+      <section className={`py-24 px-6 border-t relative overflow-hidden ${
+        isDark ? "border-white/5 bg-black" : "border-black/5 bg-slate-50"
       }`}>
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Ella Chat Interface */}
+        {/* Grid background */}
+        <div className={`absolute inset-0 ${isDark ? "opacity-30" : "opacity-10"}`}>
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(${isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)'} 1px, transparent 1px), linear-gradient(90deg, ${isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)'} 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }} />
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          {/* Header */}
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono mb-6 ${
+              isDark ? "bg-white/5 text-white/60" : "bg-black/5 text-black/60"
+            }`}>
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              NOW HIRING ACROSS ALL TEAMS
+            </div>
+            <h2 className={`text-4xl sm:text-5xl font-bold mb-4 ${isDark ? "text-white" : "text-black"}`}>
+              Find your team
+            </h2>
+            <p className={`text-lg max-w-xl mx-auto ${isDark ? "text-white/50" : "text-black/50"}`}>
+              Join brilliant minds across engineering, product, operations, and more
+            </p>
+          </motion.div>
+
+          {/* Department Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Engineering */}
             <motion.div
-              className="relative"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+                isDark 
+                  ? "bg-gradient-to-br from-blue-500/10 to-cyan-500/5 border-blue-500/20 hover:border-blue-400/40" 
+                  : "bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 hover:border-blue-400"
+              }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ delay: 0.1 }}
             >
-              {/* Chat container */}
-              <div className={`relative rounded-3xl p-6 ${
-                isDark ? "bg-white/5 backdrop-blur-sm" : "bg-white shadow-xl"
-              }`}>
-                {/* Ella avatar and header */}
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-dashed ${isDark ? 'border-white/10' : 'border-black/10'}">
-                  <div className="relative">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 p-0.5">
-                      <div className="w-full h-full rounded-full overflow-hidden bg-black">
-                        <Image src="/assets_ai/Ella.png" alt="Ella" width={48} height={48} className="object-cover" />
-                      </div>
-                    </div>
-                    <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-black"></span>
-                  </div>
-                  <div>
-                    <p className={`font-semibold ${isDark ? "text-white" : "text-black"}`}>Ella</p>
-                    <p className={`text-xs ${isDark ? "text-white/50" : "text-black/50"}`}>AI Recruiting Assistant</p>
-                  </div>
+              <div className="flex items-start justify-between mb-4">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  isDark ? "bg-blue-500/20" : "bg-blue-100"
+                }`}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-blue-500">
+                    <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                  </svg>
                 </div>
-
-                {/* Chat messages */}
-                <div className="space-y-4">
-                  <motion.div
-                    className={`max-w-[85%] rounded-2xl rounded-tl-sm px-4 py-3 ${
-                      isDark ? "bg-white/10" : "bg-violet-100"
-                    }`}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    <p className={`text-sm ${isDark ? "text-white/90" : "text-black/90"}`}>
-                      Hey! 👋 I'm Ella, your AI guide at Passage.
-                    </p>
-                  </motion.div>
-
-                  <motion.div
-                    className={`max-w-[85%] rounded-2xl rounded-tl-sm px-4 py-3 ${
-                      isDark ? "bg-white/10" : "bg-violet-100"
-                    }`}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    <p className={`text-sm ${isDark ? "text-white/90" : "text-black/90"}`}>
-                      We're building AI that helps millions of students access education. Want to join us? 🚀
-                    </p>
-                  </motion.div>
-
-                  <motion.div
-                    className="flex justify-end"
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.7 }}
-                  >
-                    <div className="max-w-[85%] rounded-2xl rounded-tr-sm px-4 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white">
-                      <p className="text-sm">Tell me more about the roles!</p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className={`max-w-[85%] rounded-2xl rounded-tl-sm px-4 py-3 ${
-                      isDark ? "bg-white/10" : "bg-violet-100"
-                    }`}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.9 }}
-                  >
-                    <p className={`text-sm ${isDark ? "text-white/90" : "text-black/90"}`}>
-                      We're hiring across Engineering, Product, Design & more. Remote-friendly, great equity, and you'll work with an amazing team! ✨
-                    </p>
-                  </motion.div>
-                </div>
-
-                {/* Input area */}
-                <motion.div
-                  className="mt-6 pt-4 border-t border-dashed ${isDark ? 'border-white/10' : 'border-black/10'}"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 1.1 }}
-                >
-                  <Link
-                    href={ASHBY_CAREERS_URL}
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-medium hover:opacity-90 transition-opacity"
-                  >
-                    <span>Chat with Ella about roles</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                    </svg>
-                  </Link>
-                </motion.div>
+                <span className={`text-xs font-mono ${isDark ? "text-blue-400" : "text-blue-600"}`}>01</span>
               </div>
-
-              {/* Floating elements */}
-              <motion.div
-                className={`absolute -top-4 -right-4 w-20 h-20 rounded-2xl rotate-12 ${
-                  isDark ? "bg-violet-500/20" : "bg-violet-200"
-                }`}
-                animate={{ rotate: [12, 18, 12], y: [0, -5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.div
-                className={`absolute -bottom-6 -left-6 w-16 h-16 rounded-full ${
-                  isDark ? "bg-indigo-500/20" : "bg-indigo-200"
-                }`}
-                animate={{ scale: [1, 1.1, 1], y: [0, 5, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
+              <h3 className={`text-xl font-semibold mb-2 ${isDark ? "text-white" : "text-black"}`}>Engineering</h3>
+              <p className={`text-sm mb-4 ${isDark ? "text-white/50" : "text-black/50"}`}>
+                Build AI systems that process millions of applications. Full-stack, ML, infrastructure.
+              </p>
+              <div className="flex items-center justify-between">
+                <div className="flex -space-x-2">
+                  {["/team/martin.jpg", "/team/siavash.jpg"].map((img, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-black">
+                      <Image src={img} alt="Team" width={32} height={32} className="object-cover" />
+                    </div>
+                  ))}
+                </div>
+                <span className={`text-xs ${isDark ? "text-white/40" : "text-black/40"}`}>5 open roles</span>
+              </div>
             </motion.div>
 
-            {/* Right - Fun team stats */}
+            {/* Product & Design */}
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+                isDark 
+                  ? "bg-gradient-to-br from-violet-500/10 to-purple-500/5 border-violet-500/20 hover:border-violet-400/40" 
+                  : "bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200 hover:border-violet-400"
+              }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ delay: 0.2 }}
             >
-              <h2 className={`text-3xl sm:text-4xl font-semibold mb-4 ${isDark ? "text-white" : "text-black"}`}>
-                Meet your future
-                <br />
-                <span className="bg-gradient-to-r from-violet-500 to-indigo-500 bg-clip-text text-transparent">teammates</span>
-              </h2>
-              <p className={`text-base mb-8 ${isDark ? "text-white/60" : "text-black/60"}`}>
-                We're a diverse crew of builders, dreamers, and problem-solvers from around the world.
+              <div className="flex items-start justify-between mb-4">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  isDark ? "bg-violet-500/20" : "bg-violet-100"
+                }`}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-violet-500">
+                    <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                    <path d="M2 2l7.586 7.586" />
+                    <circle cx="11" cy="11" r="2" />
+                  </svg>
+                </div>
+                <span className={`text-xs font-mono ${isDark ? "text-violet-400" : "text-violet-600"}`}>02</span>
+              </div>
+              <h3 className={`text-xl font-semibold mb-2 ${isDark ? "text-white" : "text-black"}`}>Product & Design</h3>
+              <p className={`text-sm mb-4 ${isDark ? "text-white/50" : "text-black/50"}`}>
+                Shape the future of education tech. Research, design, and ship products users love.
               </p>
-
-              {/* Fun stats */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className={`p-4 rounded-2xl ${isDark ? "bg-white/5" : "bg-black/5"}`}>
-                  <p className={`text-3xl font-bold ${isDark ? "text-white" : "text-black"}`}>12+</p>
-                  <p className={`text-sm ${isDark ? "text-white/50" : "text-black/50"}`}>Countries represented</p>
-                </div>
-                <div className={`p-4 rounded-2xl ${isDark ? "bg-white/5" : "bg-black/5"}`}>
-                  <p className={`text-3xl font-bold ${isDark ? "text-white" : "text-black"}`}>8</p>
-                  <p className={`text-sm ${isDark ? "text-white/50" : "text-black/50"}`}>Languages spoken</p>
-                </div>
-                <div className={`p-4 rounded-2xl ${isDark ? "bg-white/5" : "bg-black/5"}`}>
-                  <p className={`text-3xl font-bold ${isDark ? "text-white" : "text-black"}`}>∞</p>
-                  <p className={`text-sm ${isDark ? "text-white/50" : "text-black/50"}`}>Cups of coffee</p>
-                </div>
-                <div className={`p-4 rounded-2xl ${isDark ? "bg-white/5" : "bg-black/5"}`}>
-                  <p className={`text-3xl font-bold ${isDark ? "text-white" : "text-black"}`}>1</p>
-                  <p className={`text-sm ${isDark ? "text-white/50" : "text-black/50"}`}>Mission that matters</p>
-                </div>
-              </div>
-
-              {/* Team avatars row */}
-              <div className="mt-8 flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  {["/team/1.jpg", "/team/2.jpg", "/team/3.jpg", "/team/5.jpg", "/team/6.jpg"].map((img, i) => (
-                    <motion.div
-                      key={i}
-                      className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-black"
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.3 + i * 0.1 }}
-                    >
-                      <Image src={img} alt="Team" fill className="object-cover" />
-                    </motion.div>
+              <div className="flex items-center justify-between">
+                <div className="flex -space-x-2">
+                  {["/team/jonah.jpg"].map((img, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-black">
+                      <Image src={img} alt="Team" width={32} height={32} className="object-cover" />
+                    </div>
                   ))}
-                  <motion.div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-medium ${
-                      isDark ? "bg-white/10 text-white" : "bg-black/10 text-black"
-                    } ring-2 ring-black`}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.8 }}
-                  >
-                    +20
-                  </motion.div>
                 </div>
-                <p className={`text-sm ${isDark ? "text-white/60" : "text-black/60"}`}>
-                  Join our growing team
-                </p>
+                <span className={`text-xs ${isDark ? "text-white/40" : "text-black/40"}`}>3 open roles</span>
               </div>
+            </motion.div>
+
+            {/* Operations */}
+            <motion.div
+              className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+                isDark 
+                  ? "bg-gradient-to-br from-emerald-500/10 to-green-500/5 border-emerald-500/20 hover:border-emerald-400/40" 
+                  : "bg-gradient-to-br from-emerald-50 to-green-50 border-emerald-200 hover:border-emerald-400"
+              }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  isDark ? "bg-emerald-500/20" : "bg-emerald-100"
+                }`}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-emerald-500">
+                    <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+                  </svg>
+                </div>
+                <span className={`text-xs font-mono ${isDark ? "text-emerald-400" : "text-emerald-600"}`}>03</span>
+              </div>
+              <h3 className={`text-xl font-semibold mb-2 ${isDark ? "text-white" : "text-black"}`}>Operations</h3>
+              <p className={`text-sm mb-4 ${isDark ? "text-white/50" : "text-black/50"}`}>
+                Scale our global operations. Student success, partner relations, and process excellence.
+              </p>
+              <div className="flex items-center justify-between">
+                <div className="flex -space-x-2">
+                  {["/team/iman.jpg"].map((img, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-black">
+                      <Image src={img} alt="Team" width={32} height={32} className="object-cover" />
+                    </div>
+                  ))}
+                </div>
+                <span className={`text-xs ${isDark ? "text-white/40" : "text-black/40"}`}>4 open roles</span>
+              </div>
+            </motion.div>
+
+            {/* Business & Strategy */}
+            <motion.div
+              className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+                isDark 
+                  ? "bg-gradient-to-br from-orange-500/10 to-amber-500/5 border-orange-500/20 hover:border-orange-400/40" 
+                  : "bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200 hover:border-orange-400"
+              }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  isDark ? "bg-orange-500/20" : "bg-orange-100"
+                }`}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-orange-500">
+                    <path d="M12 20V10M18 20V4M6 20v-4" />
+                  </svg>
+                </div>
+                <span className={`text-xs font-mono ${isDark ? "text-orange-400" : "text-orange-600"}`}>04</span>
+              </div>
+              <h3 className={`text-xl font-semibold mb-2 ${isDark ? "text-white" : "text-black"}`}>Business & Strategy</h3>
+              <p className={`text-sm mb-4 ${isDark ? "text-white/50" : "text-black/50"}`}>
+                Drive growth and partnerships. BD, sales, marketing, and strategic initiatives.
+              </p>
+              <div className="flex items-center justify-between">
+                <div className="flex -space-x-2">
+                  {["/team/saif.jpg"].map((img, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-black">
+                      <Image src={img} alt="Team" width={32} height={32} className="object-cover" />
+                    </div>
+                  ))}
+                </div>
+                <span className={`text-xs ${isDark ? "text-white/40" : "text-black/40"}`}>2 open roles</span>
+              </div>
+            </motion.div>
+
+            {/* Legal & Finance */}
+            <motion.div
+              className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+                isDark 
+                  ? "bg-gradient-to-br from-rose-500/10 to-pink-500/5 border-rose-500/20 hover:border-rose-400/40" 
+                  : "bg-gradient-to-br from-rose-50 to-pink-50 border-rose-200 hover:border-rose-400"
+              }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  isDark ? "bg-rose-500/20" : "bg-rose-100"
+                }`}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-rose-500">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <span className={`text-xs font-mono ${isDark ? "text-rose-400" : "text-rose-600"}`}>05</span>
+              </div>
+              <h3 className={`text-xl font-semibold mb-2 ${isDark ? "text-white" : "text-black"}`}>Legal & Finance</h3>
+              <p className={`text-sm mb-4 ${isDark ? "text-white/50" : "text-black/50"}`}>
+                Navigate global compliance. Legal, finance, and risk management across 100+ countries.
+              </p>
+              <div className="flex items-center justify-between">
+                <div className="flex -space-x-2">
+                  {["/team/mark.jpg"].map((img, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-black">
+                      <Image src={img} alt="Team" width={32} height={32} className="object-cover" />
+                    </div>
+                  ))}
+                </div>
+                <span className={`text-xs ${isDark ? "text-white/40" : "text-black/40"}`}>2 open roles</span>
+              </div>
+            </motion.div>
+
+            {/* Ella AI Card */}
+            <motion.div
+              className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+                isDark 
+                  ? "bg-gradient-to-br from-indigo-500/20 to-violet-500/10 border-indigo-500/30 hover:border-indigo-400/50" 
+                  : "bg-gradient-to-br from-indigo-100 to-violet-100 border-indigo-300 hover:border-indigo-400"
+              }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 }}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl overflow-hidden bg-gradient-to-br from-indigo-500 to-violet-600 p-0.5">
+                  <div className="w-full h-full rounded-lg overflow-hidden">
+                    <Image src="/assets_ai/Ella.png" alt="Ella" width={48} height={48} className="object-cover" />
+                  </div>
+                </div>
+                <span className={`text-xs font-mono ${isDark ? "text-indigo-400" : "text-indigo-600"}`}>AI</span>
+              </div>
+              <h3 className={`text-xl font-semibold mb-2 ${isDark ? "text-white" : "text-black"}`}>Ask Ella</h3>
+              <p className={`text-sm mb-4 ${isDark ? "text-white/50" : "text-black/50"}`}>
+                Not sure which team? Chat with our AI to find the perfect role for you.
+              </p>
+              <Link
+                href={ASHBY_CAREERS_URL}
+                className="inline-flex items-center gap-2 text-sm font-medium text-indigo-500 hover:text-indigo-400 transition-colors"
+              >
+                Start a conversation
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </Link>
             </motion.div>
           </div>
+
+          {/* Bottom CTA */}
+          <motion.div
+            className="mt-12 text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.7 }}
+          >
+            <Link
+              href={ASHBY_CAREERS_URL}
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 ${
+                isDark 
+                  ? "bg-white text-black hover:bg-white/90" 
+                  : "bg-black text-white hover:bg-black/90"
+              }`}
+            >
+              View all 16+ open positions
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
